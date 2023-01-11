@@ -1,5 +1,6 @@
 package com.ilyap.tasks;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Player {
@@ -24,8 +25,15 @@ public class Player {
         int x, y;
         do {
             System.out.println("Введите X и Y ячейки (1.." + TicTacToe.matrix.length + "): ");
-            x = scanner.nextInt() - 1;
-            y = scanner.nextInt() - 1;
+            try {
+                x = scanner.nextInt() - 1;
+                y = scanner.nextInt() - 1;
+            } catch (InputMismatchException e) {
+                System.out.println("Некорректный ввод, попробуйте снова...");
+                x = -1;
+                y = -1;
+                continue;
+            }
             if (!TicTacToe.isCellEmpty(y, x)) {
                 System.out.println("Данная ячейка занята или находится за границами поля, попробуйте снова...");
             }
