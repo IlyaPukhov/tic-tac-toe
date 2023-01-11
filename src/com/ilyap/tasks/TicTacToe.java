@@ -32,14 +32,12 @@ public class TicTacToe {
             player1.move();
             printCurrentMatrix();
             if (isLastMove(player1)) {
-                player1.setCountWins(1);
                 break;
             }
 
             player2.move();
             printCurrentMatrix();
             if (isLastMove(player2)) {
-                player2.setCountWins(1);
                 break;
             }
         }
@@ -59,23 +57,32 @@ public class TicTacToe {
         game();
     }
 
+    private boolean isLastMove(Player player) {
+        if (checkWin(player.getSign())) {
+            if (player == player1) {
+                player1.setCountWins(1);
+                player2.setCountWins(0);
+            } else {
+                player1.setCountWins(0);
+                player2.setCountWins(1);
+            }
+            System.out.println(player.getName() + " выиграл!");
+            return true;
+        }
+        if (isMatrixFull()) {
+            player1.setCountWins(0);
+            player2.setCountWins(0);
+            System.out.println("НИЧЬЯ!");
+            return true;
+        }
+        return false;
+    }
+
     private void writeRating(Player... players) throws IOException {
         Files.createDirectories(Path.of("resources"));
         Path path = Path.of("resources", "players-rating.txt");
         List<String> rate = RatingHelper.getNewRate(path, players);
         Files.write(path, rate, CREATE, TRUNCATE_EXISTING);
-    }
-
-    private boolean isLastMove(Player player) {
-        if (checkWin(player.getSign())) {
-            System.out.println(player.getName() + " выиграл!");
-            return true;
-        }
-        if (isMatrixFull()) {
-            System.out.println("НИЧЬЯ!");
-            return true;
-        }
-        return false;
     }
 
     private boolean checkWin(char sign) {
