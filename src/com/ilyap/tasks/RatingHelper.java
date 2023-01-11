@@ -20,7 +20,10 @@ public class RatingHelper {
                 return lines
                         .map(String::valueOf)
                         .filter(s -> s.matches("^[а-яА-Яa-zA-Z0-9]+ — \\d+"))
-                        .collect(Collectors.toMap(k -> k.split(" — ")[0], v -> Integer.valueOf(v.split(" — ")[1])));
+                        .collect(Collectors.toMap(
+                                k -> k.split(" — ")[0],
+                                v -> Integer.valueOf(v.split(" — ")[1]))
+                        );
             }
         }
         return new HashMap<>();

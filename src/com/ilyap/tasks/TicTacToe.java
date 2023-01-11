@@ -59,7 +59,7 @@ public class TicTacToe {
 
     private boolean isLastMove(Player player) {
         if (checkWin(player.getSign())) {
-            if (player == player1) {
+            if (player.equals(player1)) {
                 player1.setCountWins(1);
                 player2.setCountWins(0);
             } else {
