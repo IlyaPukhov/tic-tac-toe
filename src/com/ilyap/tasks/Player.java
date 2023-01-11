@@ -1,13 +1,12 @@
 package com.ilyap.tasks;
 
-import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Player {
     private final String name;
     private final char sign;
     static int num = 0;
-    private final Scanner scanner = new Scanner(System.in);
     private int countWins = 0;
 
     public Player(String name) {
@@ -22,16 +21,18 @@ public class Player {
 
     public void move() {
         System.out.println("Ходит " + name);
+        Scanner scanner = new Scanner(System.in);
         int x, y;
         do {
             System.out.println("Введите X и Y ячейки (1.." + TicTacToe.matrix.length + "): ");
             try {
                 x = scanner.nextInt() - 1;
                 y = scanner.nextInt() - 1;
-            } catch (InputMismatchException e) {
+            } catch (NoSuchElementException e) {
                 System.out.println("Некорректный ввод, попробуйте снова...");
                 x = -1;
                 y = -1;
+                scanner = new Scanner(System.in);
                 continue;
             }
             if (!TicTacToe.isCellEmpty(y, x)) {
