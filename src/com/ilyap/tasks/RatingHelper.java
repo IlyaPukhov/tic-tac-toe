@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,15 +15,18 @@ import static java.util.stream.Collectors.toList;
 
 public class RatingHelper {
     private static Map<String, Integer> getCurrentRate(Path path) throws IOException {
-        try (Stream<String> lines = Files.lines(path, UTF_8)) {
-            return lines
-                    .map(String::valueOf)
-                    .filter(s -> s.matches("^\\w+ — \\d+"))
-                    .collect(Collectors.toMap(k -> k.split(" — ")[0], v -> Integer.valueOf(v.split(" — ")[1])));
+        if (Files.exists(path)) {
+            try (Stream<String> lines = Files.lines(path, UTF_8)) {
+                return lines
+                        .map(String::valueOf)
+                        .filter(s -> s.matches("^\\w+ — \\d+"))
+                        .collect(Collectors.toMap(k -> k.split(" — ")[0], v -> Integer.valueOf(v.split(" — ")[1])));
+            }
         }
+        return new HashMap<>();
     }
 
-    public static Map<String, Integer> getNewRate(Path path, Player... players) throws IOException {
+    public static List<String> getNewRate(Path path, Player... players) throws IOException {
         Map<String, Integer> currentRate = getCurrentRate(path);
         for (Player player : players) {
             if (currentRate.containsKey(player.getName())) {
@@ -35,10 +39,10 @@ public class RatingHelper {
                 currentRate.put(player.getName(), player.getCountWins());
             }
         }
-        return currentRate;
+        return toListRepresentation(currentRate);
     }
 
-    public static List<String> toListRepresentation(Map<String, Integer> playersRating) {
+    private static List<String> toListRepresentation(Map<String, Integer> playersRating) {
         return playersRating.entrySet().stream()
                 .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
                 .map(entry -> entry.getKey() + " — " + entry.getValue())

@@ -3,7 +3,7 @@ package com.ilyap.tasks;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Map;
+import java.util.List;
 import java.util.Scanner;
 
 import static java.nio.file.StandardOpenOption.*;
@@ -60,10 +60,10 @@ public class TicTacToe {
     }
 
     private void writeRating(Player... players) throws IOException {
+        Files.createDirectories(Path.of("resources"));
         Path path = Path.of("resources", "players-rating.txt");
-        Files.createFile(path);
-        Map<String, Integer> rate = RatingHelper.getNewRate(path, players);
-        Files.write(path, RatingHelper.toListRepresentation(rate), TRUNCATE_EXISTING);
+        List<String> rate = RatingHelper.getNewRate(path, players);
+        Files.write(path, rate, CREATE, TRUNCATE_EXISTING);
     }
 
     private boolean isLastMove(Player player) {
