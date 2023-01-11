@@ -1,5 +1,7 @@
 package com.ilyap.tasks;
 
+import com.ilyap.tasks.exception.GameException;
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -10,7 +12,7 @@ public class TicTacToeRunner {
             TicTacToe ticTacToe = new TicTacToe(3, new Player(scanner.next()), new Player(scanner.next()));
             ticTacToe.game();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new GameException("Ошибка ведения статистики");
         }
     }
 }

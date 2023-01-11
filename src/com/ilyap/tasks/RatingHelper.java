@@ -7,11 +7,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 
 public class RatingHelper {
     private static Map<String, Integer> getCurrentRate(Path path) throws IOException {
@@ -20,7 +19,7 @@ public class RatingHelper {
                 return lines
                         .map(String::valueOf)
                         .filter(s -> s.matches("^[а-яА-Яa-zA-Z0-9]+ — \\d+"))
-                        .collect(Collectors.toMap(
+                        .collect(toMap(
                                 k -> k.split(" — ")[0],
                                 v -> Integer.valueOf(v.split(" — ")[1]))
                         );
@@ -49,6 +48,6 @@ public class RatingHelper {
         return playersRating.entrySet().stream()
                 .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
                 .map(entry -> entry.getKey() + " — " + entry.getValue())
-                .collect(toList());
+                .toList();
     }
 }

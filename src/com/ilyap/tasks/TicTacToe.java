@@ -6,14 +6,15 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
 
-import static java.nio.file.StandardOpenOption.*;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
 public class TicTacToe {
     static char[][] matrix;
     private static final char EMPTY_CELL = '—';
 
-    Player player1;
-    Player player2;
+    private final Player player1;
+    private final Player player2;
 
     public TicTacToe() {
         this(3, new Player("PlayerOne"), new Player("PlayerTwo"));
@@ -79,8 +80,8 @@ public class TicTacToe {
     }
 
     private void writeRating(Player... players) throws IOException {
-        Files.createDirectories(Path.of("resources"));
-        Path path = Path.of("resources", "players-rating.txt");
+        Files.createDirectories(Path.of("stats"));
+        Path path = Path.of("stats", "players-rating.txt");
         List<String> rate = RatingHelper.getNewRate(path, players);
         Files.write(path, rate, CREATE, TRUNCATE_EXISTING);
     }

@@ -2,8 +2,6 @@ package com.ilyap.tasks;
 
 import java.util.Scanner;
 
-import static com.ilyap.tasks.TicTacToe.matrix;
-
 public class Player {
     private final String name;
     private final char sign;
@@ -11,7 +9,7 @@ public class Player {
     private final Scanner scanner = new Scanner(System.in);
     private int countWins = 0;
 
-    Player(String name) {
+    public Player(String name) {
         this.name = name;
         if (num == 0) {
             sign = 'x';
@@ -21,18 +19,18 @@ public class Player {
         num++;
     }
 
-    void move() {
+    public void move() {
         System.out.println("Ходит " + name);
         int x, y;
         do {
-            System.out.println("Введите X и Y ячейки (1.." + matrix.length + "): ");
+            System.out.println("Введите X и Y ячейки (1.." + TicTacToe.matrix.length + "): ");
             x = scanner.nextInt() - 1;
             y = scanner.nextInt() - 1;
             if (!TicTacToe.isCellEmpty(y, x)) {
                 System.out.println("Данная ячейка занята или находится за границами поля, попробуйте снова...");
             }
         } while (!TicTacToe.isCellEmpty(y, x));
-        matrix[y][x] = sign;
+        TicTacToe.matrix[y][x] = sign;
     }
 
     public String getName() {
