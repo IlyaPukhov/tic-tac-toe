@@ -1,4 +1,4 @@
-package com.ilyap.tasks;
+package com.ilyap.calculator;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;

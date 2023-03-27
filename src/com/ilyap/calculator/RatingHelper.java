@@ -1,4 +1,4 @@
-package com.ilyap.tasks;
+package com.ilyap.calculator;
 
 import java.io.IOException;
 import java.nio.file.Files;

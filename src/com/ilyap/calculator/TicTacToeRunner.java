@@ -1,6 +1,6 @@
-package com.ilyap.tasks;
+package com.ilyap.calculator;
 
-import com.ilyap.tasks.exception.GameException;
+import com.ilyap.calculator.exception.GameException;
 
 import java.io.IOException;
 import java.util.Scanner;
