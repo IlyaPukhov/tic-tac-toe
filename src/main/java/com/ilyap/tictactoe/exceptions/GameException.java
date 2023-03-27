@@ -1,4 +1,4 @@
-package com.ilyap.calculator.exception;
+package com.ilyap.tictactoe.exceptions;
 
 public class GameException extends RuntimeException {
     public GameException(String message) {

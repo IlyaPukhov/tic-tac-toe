@@ -1,4 +1,7 @@
-package com.ilyap.calculator;
+package com.ilyap.tictactoe;
+
+import com.ilyap.tictactoe.entities.Player;
+import com.ilyap.tictactoe.utils.RatingHelper;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,7 +13,7 @@ import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
 public class TicTacToe {
-    static char[][] matrix;
+    private static char[][] matrix;
     private static final char EMPTY_CELL = '—';
 
     private final Player player1;
@@ -168,7 +171,7 @@ public class TicTacToe {
         System.out.println();
     }
 
-    static boolean isCellEmpty(int y, int x) {
+    public static boolean isCellEmpty(int y, int x) {
         if (x < 0 || y < 0 || x >= matrix.length || y >= matrix.length) return false;
         return matrix[y][x] == EMPTY_CELL;
     }
@@ -182,5 +185,13 @@ public class TicTacToe {
             }
         }
         return true;
+    }
+
+    public static char[][] getMatrix() {
+        return matrix;
+    }
+
+    public static void setMatrix(int x, int y, char sign) {
+        matrix[y][x] = sign;
     }
 }

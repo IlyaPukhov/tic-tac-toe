@@ -1,4 +1,6 @@
-package com.ilyap.calculator;
+package com.ilyap.tictactoe.utils;
+
+import com.ilyap.tictactoe.entities.Player;
 
 import java.io.IOException;
 import java.nio.file.Files;

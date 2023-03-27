@@ -1,4 +1,6 @@
-package com.ilyap.calculator;
+package com.ilyap.tictactoe.entities;
+
+import com.ilyap.tictactoe.TicTacToe;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -24,7 +26,7 @@ public class Player {
         Scanner scanner = new Scanner(System.in);
         int x, y;
         do {
-            System.out.println("Введите X и Y ячейки (1.." + TicTacToe.matrix.length + "): ");
+            System.out.println("Введите X и Y ячейки (1.." + TicTacToe.getMatrix().length + "): ");
             try {
                 x = scanner.nextInt() - 1;
                 y = scanner.nextInt() - 1;
@@ -39,7 +41,7 @@ public class Player {
                 System.out.println("Данная ячейка занята или находится за границами поля, попробуйте снова...");
             }
         } while (!TicTacToe.isCellEmpty(y, x));
-        TicTacToe.matrix[y][x] = sign;
+        TicTacToe.setMatrix(x, y, sign);
     }
 
     public String getName() {
