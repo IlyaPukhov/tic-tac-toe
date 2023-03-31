@@ -27,6 +27,7 @@ public final class GameUtils {
                 new Image(Objects.requireNonNull(GameUtils.class.getResourceAsStream("assets/icon.png"))));
         stage.setTitle("Крестики-нолики");
         stage.setScene(new Scene(root));
+        stage.centerOnScreen();
         stage.setResizable(false);
         stage.show();
     }
