@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="760.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ilyap.tictactoe.controllers.StartController">
+    <ImageView opacity="0.7" pickOnBounds="true" preserveRatio="true" rotate="180.0" smooth="false">
+        <Image url="@../assets/background.png" />
+    </ImageView>
+   <Region layoutX="255.0" layoutY="23.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="246.0" prefWidth="250.0" style="-fx-background-color: #ffffff; -fx-background-radius: 50; -fx-opacity: 0.95; -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);" />
+    <Text layoutX="192.0" layoutY="326.39999999999986" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Выберите противника:" textAlignment="CENTER" wrappingWidth="376.0" AnchorPane.bottomAnchor="244.60000000000014" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="192.0">
+        <font>
+            <Font name="Open Sans SemiBold" size="41.0" />
+        </font>
+    </Text>
+    <Button fx:id="startButton" contentDisplay="CENTER" layoutX="255.0" layoutY="465.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="250.0" style="-fx-font-size: 30;" styleClass="btn" text="Начать" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="255.0" AnchorPane.rightAnchor="255.0">
+        <font>
+            <Font name="Open Sans SemiBold" size="1.0" />
+        </font>
+      <stylesheets>
+         <URL value="@../styles/main.css" />
+         <URL value="@../styles/fontstyles.css" />
+      </stylesheets>
+    </Button>
+    <ImageView fitHeight="215.0" fitWidth="215.0" layoutX="272.0" layoutY="39.0" pickOnBounds="true"
+               preserveRatio="true">
+        <Image url="@../assets/logo.png"/>
+    </ImageView>
+   <Region layoutX="228.0" layoutY="355.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="53.0" prefWidth="301.0" styleClass="toggleGroup" />
+   <ToggleButton fx:id="togglePvB" layoutX="359.0" layoutY="356.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-font-size: 24;" text="Бот">
+      <stylesheets>
+         <URL value="@../styles/main.css" />
+         <URL value="@../styles/fontstyles.css" />
+      </stylesheets>
+      <font>
+         <Font size="1.0" />
+      </font>
+      <styleClass>
+         <String fx:value="toggle" />
+         <String fx:value="toggleDisable" />
+      </styleClass>
+   </ToggleButton>
+   <ToggleButton fx:id="togglePvP" layoutX="228.0" layoutY="356.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="170.0" style="-fx-font-size: 24;" text="Игрок">
+      <stylesheets>
+         <URL value="@../styles/main.css" />
+         <URL value="@../styles/fontstyles.css" />
+      </stylesheets>
+      <font>
+         <Font size="1.0" />
+      </font>
+      <styleClass>
+         <String fx:value="toggle" />
+         <String fx:value="toggleEnable" />
+      </styleClass>
+   </ToggleButton>
+   <stylesheets>
+      <URL value="@../styles/main.css" />
+      <URL value="@../styles/fontstyles.css" />
+   </stylesheets>
+</AnchorPane>

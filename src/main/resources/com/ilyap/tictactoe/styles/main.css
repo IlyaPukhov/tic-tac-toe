@@ -1,19 +1,52 @@
-/*.button:hover, .saveButton:hover {*/
-/*    -fx-opacity: 0.85;*/
-/*}*/
+.btn:hover {
+    -fx-opacity: 0.85;
+}
 
-/*.button:pressed, .saveButton:pressed {*/
-/*    -fx-scale-y: 0.95;*/
-/*    -fx-scale-x: 0.95;*/
-/*}*/
+.btn:pressed {
+    -fx-scale-y: 0.95;
+    -fx-scale-x: 0.95;
+}
 
-/*.button, .saveButton {*/
-/*    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 1), 5, 0.0, 0, 1);*/
-/*}*/
+.btn {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 1), 5, 0.0, 0, 1);
+	-fx-background-color: #1e90ff;
+	-fx-background-radius: 30;
+	-fx-text-fill: #ffffff;
+}
 
-/*.field, .fieldResult, .fieldTimer {*/
-/*    -fx-background-color: #ffffff;*/
-/*    -fx-border-color: #bbbbbb;*/
-/*    -fx-border-radius: 10;*/
-/*    -fx-background-radius: 10;*/
-/*}*/
+.toggleEnable, .toggleEnable:armed {
+	-fx-background-color: #1e90ff;
+	-fx-text-fill: #ffffff;
+}
+
+.toggleDisable, toggleDisable:armed {
+	-fx-background-color: rgba(0, 0, 0, 0);
+	-fx-text-fill: #000000;
+}
+
+.toggle {
+	-fx-background-radius: 30;
+}
+
+.toggleGroup {
+	-fx-border-style: solid;
+	-fx-border-radius: 30;
+	-fx-background-radius: 30;
+	-fx-background-color: #ffffff;
+	-fx-border-color: lightgray;
+}
+
+.toggleEnable:hover {
+    -fx-background-color: #1e88e5;
+}
+
+.toggleDisable:hover {
+    -fx-background-color: #ececec;
+}
+
+.field, .fieldResult, .fieldTimer {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bbbbbb;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}

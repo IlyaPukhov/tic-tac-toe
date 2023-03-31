@@ -1,6 +1,5 @@
 package com.ilyap.tictactoe;
 
-import com.ilyap.tictactoe.utils.GameUtils;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -19,7 +18,7 @@ public class TicTacToeRunner extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        GameUtils.setWindowScene(stage, "fxml/home.fxml");
+        GameUtils.setWindowScene(stage, "fxml/start.fxml");
     }
 
     public static void main(String[] args) {

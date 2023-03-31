@@ -22,30 +22,24 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>20-ea+4</version>
+            <version>20</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
-            <version>20-ea+4</version>
+            <version>20</version>
             <classifier>win</classifier>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
-            <version>20-ea+4</version>
+            <version>20</version>
             <classifier>linux</classifier>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
-            <artifactId>javafx-graphics</artifactId>
-            <version>20-ea+4</version>
-            <classifier>mac</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>20-ea+4</version>
+            <version>20</version>
         </dependency>
     </dependencies>
 
@@ -67,7 +61,7 @@
                     <archive>
                         <manifest>
                             <mainClass>
-                                com.ilyap.tictactoe.TicTacToeLauncher
+                                com.ilyap.tictactoe.TicTacToeRunner
                             </mainClass>
                         </manifest>
                     </archive>
@@ -95,7 +89,7 @@
                             <outfile>${project.build.directory}/TicTacToe.exe</outfile>
                             <downloadUrl>https://java.com/download</downloadUrl>
                             <classPath>
-                                <mainClass>com.ilyap.tictactoe.TicTacToeLauncher</mainClass>
+                                <mainClass>com.ilyap.tictactoe.TicTacToeRunner</mainClass>
                                 <preCp>anything</preCp>
                             </classPath>
                             <icon>${project.basedir}/src/main/resources/com/ilyap/tictactoe/assets/icon.ico</icon>
@@ -111,7 +105,7 @@
                                 <copyright>(C) 2023 Ilya Pukhov</copyright>
                                 <txtProductVersion>${project.version}</txtProductVersion>
                                 <productName>${project.name}</productName>
-                                <internalName>IPv4Addressing</internalName>
+                                <internalName>TicTacToe</internalName>
                                 <originalFilename>TicTacToe.exe</originalFilename>
                             </versionInfo>
                         </configuration>
@@ -123,8 +117,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.10.1</version>
                 <configuration>
-                    <source>16</source>
-                    <target>16</target>
+                    <source>20</source>
+                    <target>20</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -136,7 +130,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.ilyap.tictactoe.TicTacToeLauncher</mainClass>
+                            <mainClass>com.ilyap.tictactoe.TicTacToeRunner</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
