@@ -5,24 +5,14 @@ import com.ilyap.tictactoe.TicTacToe;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class Player {
-    private final String name;
-    private final char sign;
-    static int num = 0;
-    private int countWins = 0;
-
-    public Player(String name) {
-        this.name = name;
-        if (num == 0) {
-            sign = 'x';
-        } else {
-            sign = 'o';
-        }
-        num++;
+public class Gamer extends TicTacToePlayer {
+    public Gamer(String name, char sign) {
+        super(name, sign);
     }
 
+    @Override
     public void move() {
-        System.out.println("Ходит " + name);
+        System.out.println("Ходит " + this.getName());
         Scanner scanner = new Scanner(System.in);
         int x, y;
         do {
@@ -37,26 +27,10 @@ public class Player {
                 scanner = new Scanner(System.in);
                 continue;
             }
-            if (!TicTacToe.isCellEmpty(y, x)) {
+            if (TicTacToe.isCellFilled(y, x)) {
                 System.out.println("Данная ячейка занята или находится за границами поля, попробуйте снова...");
             }
-        } while (!TicTacToe.isCellEmpty(y, x));
-        TicTacToe.setMatrix(x, y, sign);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public char getSign() {
-        return sign;
-    }
-
-    public int getCountWins() {
-        return countWins;
-    }
-
-    public void setCountWins(int countWins) {
-        this.countWins = countWins;
+        } while (TicTacToe.isCellFilled(y, x));
+        TicTacToe.setMatrix(x, y, this.getSign());
     }
 }

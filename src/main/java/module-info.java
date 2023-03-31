@@ -13,4 +13,6 @@ module com.ilyap.tictactoe {
     opens com.ilyap.tictactoe.exceptions to javafx.fxml;
     exports com.ilyap.tictactoe.utils;
     opens com.ilyap.tictactoe.utils to javafx.fxml;
+    exports com.ilyap.tictactoe.entities;
+    opens com.ilyap.tictactoe.entities to javafx.fxml;
 }

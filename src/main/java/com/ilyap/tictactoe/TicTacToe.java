@@ -1,6 +1,7 @@
 package com.ilyap.tictactoe;
 
-import com.ilyap.tictactoe.entities.Player;
+import com.ilyap.tictactoe.entities.Gamer;
+import com.ilyap.tictactoe.entities.TicTacToePlayer;
 import com.ilyap.tictactoe.utils.RatingHelper;
 
 import java.io.IOException;
@@ -16,14 +17,14 @@ public class TicTacToe {
     private static char[][] matrix;
     private static final char EMPTY_CELL = '—';
 
-    private final Player player1;
-    private final Player player2;
+    private final TicTacToePlayer player1;
+    private final TicTacToePlayer player2;
 
     public TicTacToe() {
-        this(3, new Player("PlayerOne"), new Player("PlayerTwo"));
+        this(3, new Gamer("Player1", 'x'), new Gamer("Player2", 'o'));
     }
 
-    public TicTacToe(int size, Player player1, Player player2) {
+    public TicTacToe(int size, TicTacToePlayer player1, TicTacToePlayer player2) {
         matrix = new char[size][size];
         this.player1 = player1;
         this.player2 = player2;
@@ -61,7 +62,7 @@ public class TicTacToe {
         game();
     }
 
-    private boolean isLastMove(Player player) {
+    private boolean isLastMove(TicTacToePlayer player) {
         if (checkWin(player.getSign())) {
             if (player.equals(player1)) {
                 player1.setCountWins(1);
@@ -82,7 +83,7 @@ public class TicTacToe {
         return false;
     }
 
-    private void writeRating(Player... players) throws IOException {
+    private void writeRating(TicTacToePlayer... players) throws IOException {
         Files.createDirectories(Path.of("stats"));
         Path path = Path.of("stats", "players-rating.txt");
         List<String> rate = RatingHelper.getNewRate(path, players);
@@ -171,9 +172,10 @@ public class TicTacToe {
         System.out.println();
     }
 
-    public static boolean isCellEmpty(int y, int x) {
-        if (x < 0 || y < 0 || x >= matrix.length || y >= matrix.length) return false;
-        return matrix[y][x] == EMPTY_CELL;
+    public static boolean isCellFilled(int y, int x) {
+        //TODO() поправить условие ошибку
+        if (x < 0 || y < 0 || x >= matrix.length || y >= matrix.length) return true;
+        return matrix[y][x] != EMPTY_CELL;
     }
 
     private boolean isMatrixFull() {

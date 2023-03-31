@@ -2,7 +2,7 @@ package com.ilyap.tictactoe.controllers;
 
 import com.ilyap.tictactoe.GameUtils;
 import com.ilyap.tictactoe.TicTacToeRunner;
-import com.ilyap.tictactoe.exceptions.NextSceneException;
+import com.ilyap.tictactoe.exceptions.OpenSceneException;
 import com.ilyap.tictactoe.interfaces.SceneSwitchable;
 import com.ilyap.tictactoe.utils.GameMode;
 import javafx.fxml.FXML;
@@ -29,14 +29,15 @@ public class StartController implements SceneSwitchable {
     @FXML
     private ImageView logo;
 
+    final ToggleGroup group = new ToggleGroup();
+
     final String github = "https://github.com/IlyaPukhov";
 
     @FXML
     void initialize() {
-        ToggleGroup group = new ToggleGroup();
         togglePvP.setToggleGroup(group);
         togglePvB.setToggleGroup(group);
-        togglePvP.setSelected(true);
+        checkReturning();
 
         startButton.setOnAction(actionEvent -> openNextScene());
         togglePvP.setOnAction(actionEvent -> toggleSwitch());
@@ -62,14 +63,21 @@ public class StartController implements SceneSwitchable {
         }
     }
 
+    private void checkReturning() {
+        boolean isActivePvP = GameUtils.getGameMode() == null || GameUtils.getGameMode() == PVP;
+        group.selectToggle(isActivePvP ? togglePvP : togglePvB);
+        toggleSwitch();
+    }
+
     @Override
     public void openNextScene() {
         GameMode gameMode = togglePvP.isSelected() ? PVP : PVB;
         GameUtils.setGameMode(gameMode);
+
         try {
             GameUtils.openNextScene(startButton, "fxml/naming.fxml");
         } catch (IOException e) {
-            throw new NextSceneException(e.getCause());
+            throw new OpenSceneException(e.getCause());
         }
     }
 }

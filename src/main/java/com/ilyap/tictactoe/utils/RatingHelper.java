@@ -1,6 +1,6 @@
 package com.ilyap.tictactoe.utils;
 
-import com.ilyap.tictactoe.entities.Player;
+import com.ilyap.tictactoe.entities.TicTacToePlayer;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,9 +30,9 @@ public class RatingHelper {
         return new HashMap<>();
     }
 
-    public static List<String> getNewRate(Path path, Player... players) throws IOException {
+    public static List<String> getNewRate(Path path, TicTacToePlayer... players) throws IOException {
         Map<String, Integer> currentRate = getCurrentRate(path);
-        for (Player player : players) {
+        for (TicTacToePlayer player : players) {
             if (currentRate.containsKey(player.getName())) {
                 for (Map.Entry<String, Integer> entry : currentRate.entrySet()) {
                     if (entry.getKey().equals(player.getName())) {
