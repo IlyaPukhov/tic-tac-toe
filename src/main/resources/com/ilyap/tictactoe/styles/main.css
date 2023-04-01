@@ -1,19 +1,19 @@
-.btn:hover, .returnButton:hover {
+.button:hover, .returnButton:hover {
     -fx-opacity: 0.85;
 }
 
-.btn:pressed, .returnButton:pressed {
+.button:pressed, .returnButton:pressed {
     -fx-scale-y: 0.95;
     -fx-scale-x: 0.95;
 }
 
-.btn, .returnButton {
+.button, .returnButton {
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 1), 5, 0.0, 0, 1);
     -fx-background-radius: 30;
     -fx-text-fill: #ffffff;
 }
 
-.btn {
+.button {
     -fx-background-color: #184bec;
 }
 
@@ -35,16 +35,24 @@
     -fx-background-radius: 30;
 }
 
-.toggleGroup {
-    -fx-border-style: solid;
+.toggleGroup, .gridSeparator {
     -fx-border-radius: 30;
     -fx-background-radius: 30;
+}
+
+.toggleGroup {
+	-fx-border-style: solid;
     -fx-background-color: #ffffff;
     -fx-border-color: lightgray;
 }
 
+.gridSeparator {
+    -fx-background-color: #607d8b;
+	-fx-border-color: #607d8b;
+}
+
 .toggleEnable:hover {
-    -fx-background-color: #1e88e5;
+    -fx-background-color: #1a45ce;
 }
 
 .toggleDisable:hover {
