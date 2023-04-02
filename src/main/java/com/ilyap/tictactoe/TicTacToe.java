@@ -46,15 +46,16 @@ public class TicTacToe {
                 player1.setCountWins(0);
                 player2.setCountWins(1);
             }
+            writeRating(player1, player2);
             return WON;
         } else {
             if (isMatrixFull()) {
                 player1.setCountWins(0);
                 player2.setCountWins(0);
+                writeRating(player1, player2);
                 return DRAW;
             }
         }
-        writeRating(player1, player2);
         return LOST;
     }
 

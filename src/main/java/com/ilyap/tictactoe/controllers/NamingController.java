@@ -58,8 +58,9 @@ public class NamingController implements SceneSwitchable {
     }
 
     private String getName(TextField field) {
-        int maxLength = Math.min(field.getLength(), 14);
-        return (field.getText().equals("") ? field.getPromptText() : field.getText()).substring(0, maxLength);
+        String name = field.getText().equals("") ? field.getPromptText() : field.getText();
+        int maxLength = Math.min(name.length(), 14);
+        return name.substring(0, maxLength);
     }
 
     public void openPreviousScene() {
