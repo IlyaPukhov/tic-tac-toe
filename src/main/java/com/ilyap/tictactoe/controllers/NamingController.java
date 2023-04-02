@@ -1,6 +1,6 @@
 package com.ilyap.tictactoe.controllers;
 
-import com.ilyap.tictactoe.GameUtils;
+import com.ilyap.tictactoe.utils.GameUtils;
 import com.ilyap.tictactoe.entities.Bot;
 import com.ilyap.tictactoe.entities.Gamer;
 import com.ilyap.tictactoe.exceptions.OpenSceneException;
@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import static com.ilyap.tictactoe.utils.GameMode.*;
+import static com.ilyap.tictactoe.entities.CellState.*;
 
 import java.io.IOException;
 
@@ -42,12 +43,12 @@ public class NamingController implements SceneSwitchable {
 
     @Override
     public void openNextScene() {
-        GameUtils.setPlayer1(new Gamer(playerOne.getText(), 'x'));
+        GameUtils.setPlayer1(new Gamer(getName(playerOne), CROSS));
 
         if (GameUtils.getGameMode() == PVP) {
-            GameUtils.setPlayer2(new Gamer(playerTwo.getText(), 'o'));
+            GameUtils.setPlayer2(new Gamer(getName(playerTwo), NOUGHT));
         } else {
-            GameUtils.setPlayer2(new Bot(playerTwo.getText(), 'o'));
+            GameUtils.setPlayer2(new Bot(getName(playerTwo), NOUGHT));
         }
 
         try {
@@ -55,6 +56,10 @@ public class NamingController implements SceneSwitchable {
         } catch (IOException e) {
             throw new OpenSceneException(e.getCause());
         }
+    }
+
+    private String getName(TextField field) {
+        return field.getText().equals("") ? field.getPromptText() : field.getText();
     }
 
     public void openPreviousScene() {

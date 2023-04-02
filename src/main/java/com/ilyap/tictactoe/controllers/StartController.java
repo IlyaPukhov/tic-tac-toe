@@ -1,6 +1,6 @@
 package com.ilyap.tictactoe.controllers;
 
-import com.ilyap.tictactoe.GameUtils;
+import com.ilyap.tictactoe.utils.GameUtils;
 import com.ilyap.tictactoe.TicTacToeRunner;
 import com.ilyap.tictactoe.exceptions.OpenSceneException;
 import com.ilyap.tictactoe.interfaces.SceneSwitchable;

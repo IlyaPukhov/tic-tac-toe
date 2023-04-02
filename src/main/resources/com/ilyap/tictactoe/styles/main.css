@@ -7,7 +7,7 @@
     -fx-scale-x: 0.95;
 }
 
-.button, .returnButton {
+.button, .returnButton, .reloadButton {
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 1), 5, 0.0, 0, 1);
     -fx-background-radius: 30;
     -fx-text-fill: #ffffff;
@@ -19,6 +19,10 @@
 
 .returnButton {
     -fx-background-color: #f32d2d;
+}
+
+.reloadButton {
+    -fx-background-color: #00a62f;
 }
 
 .toggleEnable, .toggleEnable:armed {

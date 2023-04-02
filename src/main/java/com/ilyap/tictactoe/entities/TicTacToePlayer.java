@@ -1,13 +1,11 @@
 package com.ilyap.tictactoe.entities;
 
-import com.ilyap.tictactoe.interfaces.Movable;
-
-public abstract class TicTacToePlayer implements Movable {
+public abstract class TicTacToePlayer {
     private final String name;
-    private final char sign;
+    private final CellState sign;
     private int countWins = 0;
 
-    public TicTacToePlayer(String name, char sign) {
+    public TicTacToePlayer(String name, CellState sign) {
         this.name = name;
         this.sign = sign;
     }
@@ -16,7 +14,7 @@ public abstract class TicTacToePlayer implements Movable {
         return name;
     }
 
-    public char getSign() {
+    public CellState getSign() {
         return sign;
     }
 

@@ -1,5 +1,6 @@
 package com.ilyap.tictactoe;
 
+import com.ilyap.tictactoe.entities.CellState;
 import com.ilyap.tictactoe.entities.Gamer;
 import com.ilyap.tictactoe.entities.TicTacToePlayer;
 import com.ilyap.tictactoe.utils.RatingHelper;
@@ -8,61 +9,36 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Scanner;
 
+import static com.ilyap.tictactoe.entities.CellState.*;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
 public class TicTacToe {
-    private static char[][] matrix;
-    private static final char EMPTY_CELL = '—';
+    private static CellState[][] matrix;
 
     private final TicTacToePlayer player1;
     private final TicTacToePlayer player2;
 
     public TicTacToe() {
-        this(3, new Gamer("Player1", 'x'), new Gamer("Player2", 'o'));
+        this(3, new Gamer("Player1", CROSS), new Gamer("Player2", NOUGHT));
     }
 
     public TicTacToe(int size, TicTacToePlayer player1, TicTacToePlayer player2) {
-        matrix = new char[size][size];
+        matrix = new CellState[size][size];
         this.player1 = player1;
         this.player2 = player2;
     }
 
     public void game() throws IOException {
         initMatrix();
-        printCurrentMatrix();
-        while (true) {
-            player1.move();
-            printCurrentMatrix();
-            if (isLastMove(player1)) {
-                break;
-            }
-
-            player2.move();
-            printCurrentMatrix();
-            if (isLastMove(player2)) {
-                break;
-            }
-        }
-        writeRating(player1, player2);
-
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("Хотите продолжить? ");
-            if (scanner.next().equalsIgnoreCase("да")) {
-                restartGame();
-            } else {
-                System.out.println("GAME OVER.");
-            }
-        }
     }
 
     private void restartGame() throws IOException {
         game();
     }
 
-    private boolean isLastMove(TicTacToePlayer player) {
+    public boolean isLastMove(TicTacToePlayer player) throws IOException {
         if (checkWin(player.getSign())) {
             if (player.equals(player1)) {
                 player1.setCountWins(1);
@@ -71,15 +47,15 @@ public class TicTacToe {
                 player1.setCountWins(0);
                 player2.setCountWins(1);
             }
-            System.out.println(player.getName() + " выиграл!");
             return true;
         }
+
         if (isMatrixFull()) {
             player1.setCountWins(0);
             player2.setCountWins(0);
-            System.out.println("НИЧЬЯ!");
             return true;
         }
+        writeRating(player1, player2);
         return false;
     }
 
@@ -90,18 +66,18 @@ public class TicTacToe {
         Files.write(path, rate, CREATE, TRUNCATE_EXISTING);
     }
 
-    private boolean checkWin(char sign) {
+    private boolean checkWin(CellState sign) {
         return checkHorizontal(sign) ||
                 checkVertical(sign) ||
                 checkLeftDiagonal(sign) ||
                 checkRightDiagonal(sign);
     }
 
-    private boolean checkHorizontal(char sign) {
-        for (char[] chars : matrix) {
+    private boolean checkHorizontal(CellState sign) {
+        for (CellState[] cells : matrix) {
             int countSign = 0;
             for (int i = 0; i < matrix.length; i++) {
-                if (chars[i] == sign) {
+                if (cells[i] == sign) {
                     countSign++;
                 }
                 if (countSign == matrix.length) {
@@ -112,7 +88,7 @@ public class TicTacToe {
         return false;
     }
 
-    private boolean checkVertical(char sign) {
+    private boolean checkVertical(CellState sign) {
         for (int i = 0; i < matrix.length; i++) {
             int countSign = 0;
             for (int j = 0; j < matrix[i].length; j++) {
@@ -127,7 +103,7 @@ public class TicTacToe {
         return false;
     }
 
-    private boolean checkLeftDiagonal(char sign) {
+    private boolean checkLeftDiagonal(CellState sign) {
         int countSign = 0;
         for (int i = 0; i < matrix.length; i++) {
             if (matrix[i][i] == sign) {
@@ -140,7 +116,7 @@ public class TicTacToe {
         return false;
     }
 
-    private boolean checkRightDiagonal(char sign) {
+    private boolean checkRightDiagonal(CellState sign) {
         int countSign = 0;
         for (int i = 0; i < matrix.length; i++) {
             if (matrix[matrix.length - i - 1][i] == sign) {
@@ -157,31 +133,20 @@ public class TicTacToe {
     private void initMatrix() {
         for (int row = 0; row < matrix.length; row++) {
             for (int col = 0; col < matrix.length; col++)
-                matrix[row][col] = EMPTY_CELL;
+                matrix[row][col] = EMPTY;
         }
-    }
-
-    private void printCurrentMatrix() {
-        for (char[] chars : matrix) {
-            for (char value : chars) {
-                System.out.print("| " + value + " ");
-            }
-            System.out.print("|");
-            System.out.println();
-        }
-        System.out.println();
     }
 
     public static boolean isCellFilled(int y, int x) {
         //TODO() поправить условие ошибку
         if (x < 0 || y < 0 || x >= matrix.length || y >= matrix.length) return true;
-        return matrix[y][x] != EMPTY_CELL;
+        return matrix[y][x] != EMPTY;
     }
 
     private boolean isMatrixFull() {
-        for (char[] chars : matrix) {
-            for (char value : chars) {
-                if (value == EMPTY_CELL) {
+        for (CellState[] cells : matrix) {
+            for (CellState value : cells) {
+                if (value == EMPTY) {
                     return false;
                 }
             }
@@ -189,11 +154,11 @@ public class TicTacToe {
         return true;
     }
 
-    public static char[][] getMatrix() {
+    public static CellState[][] getMatrix() {
         return matrix;
     }
 
-    public static void setMatrix(int x, int y, char sign) {
+    public static void setMatrix(int x, int y, CellState sign) {
         matrix[y][x] = sign;
     }
 }

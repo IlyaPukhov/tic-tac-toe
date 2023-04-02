@@ -1,7 +1,7 @@
-package com.ilyap.tictactoe;
+package com.ilyap.tictactoe.utils;
 
+import com.ilyap.tictactoe.TicTacToeRunner;
 import com.ilyap.tictactoe.entities.TicTacToePlayer;
-import com.ilyap.tictactoe.utils.GameMode;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,9 +30,9 @@ public final class GameUtils {
     }
 
     private void setWindowScene(Stage stage, String path) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(GameUtils.class.getResource(path)));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(TicTacToeRunner.class.getResource(path)));
         stage.getIcons().add(
-                new Image(Objects.requireNonNull(GameUtils.class.getResourceAsStream("assets/icon.png"))));
+                new Image(Objects.requireNonNull(TicTacToeRunner.class.getResourceAsStream("assets/icon.png"))));
         stage.setTitle("Крестики-нолики");
         stage.setScene(new Scene(root));
         stage.centerOnScreen();
