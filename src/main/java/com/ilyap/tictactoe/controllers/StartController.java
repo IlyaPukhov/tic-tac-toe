@@ -31,7 +31,7 @@ public class StartController implements SceneSwitchable {
 
     final ToggleGroup group = new ToggleGroup();
 
-    final String github = "https://github.com/IlyaPukhov";
+    private static final String GITHUB_LINK = "https://github.com/IlyaPukhov";
 
     @FXML
     void initialize() {
@@ -42,7 +42,7 @@ public class StartController implements SceneSwitchable {
         startButton.setOnAction(actionEvent -> openNextScene());
         togglePvP.setOnAction(actionEvent -> toggleSwitch());
         togglePvB.setOnAction(actionEvent -> toggleSwitch());
-        logo.setOnMouseClicked(mouseEvent -> TicTacToeRunner.openInBrowser(github));
+        logo.setOnMouseClicked(mouseEvent -> TicTacToeRunner.openInBrowser(GITHUB_LINK));
     }
 
     private void toggleSwitch() {

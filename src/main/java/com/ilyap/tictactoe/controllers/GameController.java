@@ -1,14 +1,15 @@
 package com.ilyap.tictactoe.controllers;
 
-import com.ilyap.tictactoe.entities.Bot;
-import com.ilyap.tictactoe.entities.Gamer;
-import com.ilyap.tictactoe.utils.GameUtils;
 import com.ilyap.tictactoe.TicTacToe;
 import com.ilyap.tictactoe.TicTacToeRunner;
+import com.ilyap.tictactoe.entities.Bot;
+import com.ilyap.tictactoe.entities.Gamer;
 import com.ilyap.tictactoe.entities.TicTacToePlayer;
 import com.ilyap.tictactoe.exceptions.GameException;
 import com.ilyap.tictactoe.exceptions.OpenSceneException;
 import com.ilyap.tictactoe.interfaces.SceneSwitchable;
+import com.ilyap.tictactoe.utils.GameUtils;
+import com.ilyap.tictactoe.utils.PlayerState;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -22,6 +23,8 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class GameController implements SceneSwitchable {
 
@@ -39,27 +42,32 @@ public class GameController implements SceneSwitchable {
 
     private final TicTacToePlayer player1 = GameUtils.getPlayer1();
     private final TicTacToePlayer player2 = GameUtils.getPlayer2();
-    private final TicTacToe ticTacToe = new TicTacToe(3, player1, player2);
-
     private final List<TicTacToePlayer> players = List.of(player1, player2);
 
-    private TicTacToePlayer currentMovingPlayer = player1;
-
+    private TicTacToePlayer currentMovingPlayer;
     private static final String TITLE_START = "Сейчас ходит ";
+
+    private final TicTacToe ticTacToe = new TicTacToe(3, player1, player2);
+
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @FXML
     void initialize() {
-        //TODO() перезапись ячейки запрещена!
         newGame(ticTacToe);
-        nextStep(currentMovingPlayer);
 
-        gameField.setOnMouseClicked(this::clickGrid);
+        gameField.setOnMouseClicked(mouseEvent -> {
+            try {
+                clickGrid(mouseEvent);
+            } catch (IOException e) {
+                throw new GameException(e.getCause());
+            }
+        });
 
         resultsButton.setOnAction(actionEvent -> openNextScene());
         repeatButton.setOnAction(actionEvent -> newGame(ticTacToe));
     }
 
-    private void clickGrid(MouseEvent mouseEvent) {
+    private void clickGrid(MouseEvent mouseEvent) throws IOException {
         Node clickedNode = mouseEvent.getPickResult().getIntersectedNode();
         if (clickedNode == gameField || currentMovingPlayer.getClass() == Bot.class) return;
 
@@ -67,56 +75,58 @@ public class GameController implements SceneSwitchable {
         int y = fixNull(GridPane.getRowIndex(clickedNode));
 
         ((ImageView) clickedNode).setImage(getPlayerSign(currentMovingPlayer));
-
-        move(currentMovingPlayer, x, y);
+        clickedNode.setDisable(true);
+        gamerMove(x, y);
     }
 
-
-    //    private void move(Bot player) throws IOException {
-//        player.move();
-//        lastMovingPlayer = player;
-//        if (ticTacToe.isLastMove(player)) {
-//            System.out.println("KAVANAUGH");
-//        }
-//    }
-//
-    private void move(TicTacToePlayer player, int x, int y) {
-        System.out.println("PLAYERMOVE");
-
-        //((Gamer) currentMovingPlayer).move(x, y);
-
-        currentMovingPlayer = players.get(players.size() - (players.indexOf(currentMovingPlayer)) - 1);
-
-        nextStep(currentMovingPlayer);
+    private void gamerMove(int x, int y) throws IOException {
+        ((Gamer) currentMovingPlayer).move(x, y);
+        nextStep();
     }
 
-    private void move(TicTacToePlayer player) {
-        System.out.println("BOTMOVE");
-        //int[] xy = ((Bot) currentMovingPlayer).move();
+    private void botMove() {
+        int[] xy = ((Bot) currentMovingPlayer).move();
+        Node node = getCurrentNode(xy[0], xy[1]);
 
-        currentMovingPlayer = players.get(players.size() - (players.indexOf(currentMovingPlayer)) - 1);
-
-//        ((ImageView) Objects.requireNonNull(getCurrentNode(xy[0], xy[1])))
-//                .setImage(getPlayerSign(currentMovingPlayer));
-
-        nextStep(currentMovingPlayer);
+        executorService.submit(() -> {
+            try {
+                Thread.sleep(1000);
+                ((ImageView) Objects.requireNonNull(node)).setImage(getPlayerSign(currentMovingPlayer));
+                node.setDisable(true);
+                nextStep();
+            } catch (InterruptedException | IOException e) {
+                throw new GameException(e.getCause());
+            }
+        });
     }
 
-    private void nextStep(TicTacToePlayer player) {
-        //TODO() цвета пачины
-        if (player.getClass().equals(Bot.class)) {
+    private void nextStep() throws IOException {
+        if (checkWinner(currentMovingPlayer)) {
+            winnerRoutines();
+        } else {
+            currentMovingPlayer = players.get(players.size() - (players.indexOf(currentMovingPlayer)) - 1);
+            movingRoutines();
+        }
+    }
+
+    private void movingRoutines() {
+        if (currentMovingPlayer.getClass().equals(Bot.class)) {
             moveTitle.setText(TITLE_START + currentMovingPlayer.getName());
             moveTitle.setFill(Paint.valueOf("#345ef3"));
-            move(player);
+            botMove();
         } else {
             moveTitle.setText(TITLE_START + currentMovingPlayer.getName());
-            if (moveTitle.getFill().toString().equals("#f44336")) {
-                moveTitle.setFill(Paint.valueOf("#345ef3"));
-            } else {
+            if (currentMovingPlayer == player1) {
                 moveTitle.setFill(Paint.valueOf("#f44336"));
+            } else {
+                moveTitle.setFill(Paint.valueOf("#345ef3"));
             }
         }
+    }
 
+    private void winnerRoutines() {
+        moveTitle.setText(currentMovingPlayer.getName() + " победил!");
+        gameField.setDisable(true);
     }
 
     private Node getCurrentNode(int column, int row) {
@@ -136,12 +146,19 @@ public class GameController implements SceneSwitchable {
                 TicTacToeRunner.class.getResourceAsStream(player.getSign().getSignPath())));
     }
 
+    private boolean checkWinner(TicTacToePlayer player) throws IOException {
+        return ticTacToe.checkWin(player) == PlayerState.WON;
+    }
+
     private void newGame(TicTacToe ticTacToe) {
-        try {
-            ticTacToe.game();
-        } catch (IOException e) {
-            throw new GameException("Ошибка ведения статистики");
+        ticTacToe.game();
+        gameField.setDisable(false);
+        for (Node node : gameField.getChildren()) {
+            node.setDisable(false);
+            ((ImageView) node).setImage(null);
         }
+        currentMovingPlayer = player1;
+        movingRoutines();
     }
 
     private int fixNull(Integer el) {
@@ -151,6 +168,7 @@ public class GameController implements SceneSwitchable {
     @Override
     public void openNextScene() {
         try {
+            executorService.shutdown();
             GameUtils.openNextScene(resultsButton, "fxml/results.fxml");
         } catch (IOException e) {
             throw new OpenSceneException(e.getCause());

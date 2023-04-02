@@ -2,6 +2,7 @@ package com.ilyap.tictactoe.utils;
 
 import com.ilyap.tictactoe.TicTacToeRunner;
 import com.ilyap.tictactoe.entities.TicTacToePlayer;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,6 +31,11 @@ public final class GameUtils {
     }
 
     private void setWindowScene(Stage stage, String path) throws IOException {
+        stage.setOnCloseRequest(t -> {
+            Platform.exit();
+            System.exit(0);
+        });
+
         Parent root = FXMLLoader.load(Objects.requireNonNull(TicTacToeRunner.class.getResource(path)));
         stage.getIcons().add(
                 new Image(Objects.requireNonNull(TicTacToeRunner.class.getResourceAsStream("assets/icon.png"))));

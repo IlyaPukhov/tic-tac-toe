@@ -3,6 +3,8 @@ package com.ilyap.tictactoe;
 import com.ilyap.tictactoe.entities.CellState;
 import com.ilyap.tictactoe.entities.Gamer;
 import com.ilyap.tictactoe.entities.TicTacToePlayer;
+import com.ilyap.tictactoe.exceptions.GameException;
+import com.ilyap.tictactoe.utils.PlayerState;
 import com.ilyap.tictactoe.utils.RatingHelper;
 
 import java.io.IOException;
@@ -11,6 +13,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import static com.ilyap.tictactoe.entities.CellState.*;
+import static com.ilyap.tictactoe.utils.PlayerState.*;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
@@ -30,15 +33,11 @@ public class TicTacToe {
         this.player2 = player2;
     }
 
-    public void game() throws IOException {
+    public void game() {
         initMatrix();
     }
 
-    private void restartGame() throws IOException {
-        game();
-    }
-
-    public boolean isLastMove(TicTacToePlayer player) throws IOException {
+    public PlayerState checkWin(TicTacToePlayer player) throws IOException {
         if (checkWin(player.getSign())) {
             if (player.equals(player1)) {
                 player1.setCountWins(1);
@@ -47,16 +46,16 @@ public class TicTacToe {
                 player1.setCountWins(0);
                 player2.setCountWins(1);
             }
-            return true;
-        }
-
-        if (isMatrixFull()) {
-            player1.setCountWins(0);
-            player2.setCountWins(0);
-            return true;
+            return WON;
+        } else {
+            if (isMatrixFull()) {
+                player1.setCountWins(0);
+                player2.setCountWins(0);
+                return DRAW;
+            }
         }
         writeRating(player1, player2);
-        return false;
+        return LOST;
     }
 
     private void writeRating(TicTacToePlayer... players) throws IOException {
@@ -137,10 +136,11 @@ public class TicTacToe {
         }
     }
 
-    public static boolean isCellFilled(int y, int x) {
-        //TODO() поправить условие ошибку
-        if (x < 0 || y < 0 || x >= matrix.length || y >= matrix.length) return true;
-        return matrix[y][x] != EMPTY;
+    public static boolean isCellEmpty(int x, int y) {
+        if (x < 0 || y < 0 || x >= matrix.length || y >= matrix.length) {
+            throw new GameException("Неверные координаты!");
+        }
+        return matrix[y][x] == EMPTY;
     }
 
     private boolean isMatrixFull() {
@@ -152,10 +152,6 @@ public class TicTacToe {
             }
         }
         return true;
-    }
-
-    public static CellState[][] getMatrix() {
-        return matrix;
     }
 
     public static void setMatrix(int x, int y, CellState sign) {

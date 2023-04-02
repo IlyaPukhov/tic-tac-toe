@@ -31,10 +31,9 @@ public class NamingController implements SceneSwitchable {
     @FXML
     void initialize() {
         if (GameUtils.getGameMode() == PVB) {
-            playerOne.setText("Player");
-            playerTwo.setEditable(false);
+            playerOne.setPromptText("Player");
             playerTwo.setDisable(true);
-            playerTwo.setText("Bot");
+            playerTwo.setPromptText("Bot");
         }
 
         saveButton.setOnAction(actionEvent -> openNextScene());
@@ -59,7 +58,8 @@ public class NamingController implements SceneSwitchable {
     }
 
     private String getName(TextField field) {
-        return field.getText().equals("") ? field.getPromptText() : field.getText();
+        int maxLength = Math.min(field.getLength(), 14);
+        return (field.getText().equals("") ? field.getPromptText() : field.getText()).substring(0, maxLength);
     }
 
     public void openPreviousScene() {
