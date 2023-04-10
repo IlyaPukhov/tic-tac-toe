@@ -5,7 +5,7 @@
     src: url("../fonts/OpenSans_SemiBold.ttf");
 }
 
-.field, .toggle, .text, .button, .returnButton {
+.field, .toggle, .text, .button, .returnButton, .column-header {
     -fx-font-family: 'Open Sans Regular';
     -fx-font-smoothing-type: gray;
 }
@@ -14,7 +14,7 @@
     -fx-font-size: 24;
 }
 
-.text, .title {
+.text, .title, .column-header {
     -fx-font-family: 'Open Sans SemiBold';
     -fx-font-size: 26;
 }

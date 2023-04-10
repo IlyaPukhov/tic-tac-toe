@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.UtilityClass;
 
 import java.io.IOException;
@@ -16,9 +18,17 @@ import java.util.Objects;
 
 @UtilityClass
 public final class GameUtils {
+
+    @Getter
+    @Setter
     private GameMode gameMode;
 
+    @Getter
+    @Setter
     private TicTacToePlayer player1;
+
+    @Getter
+    @Setter
     private TicTacToePlayer player2;
 
     public void openNextScene(Button button, String path) throws IOException {
@@ -44,29 +54,5 @@ public final class GameUtils {
         stage.centerOnScreen();
         stage.setResizable(false);
         stage.show();
-    }
-
-    public GameMode getGameMode() {
-        return gameMode;
-    }
-
-    public void setGameMode(GameMode gameMode) {
-        GameUtils.gameMode = gameMode;
-    }
-
-    public TicTacToePlayer getPlayer1() {
-        return player1;
-    }
-
-    public void setPlayer1(TicTacToePlayer player1) {
-        GameUtils.player1 = player1;
-    }
-
-    public TicTacToePlayer getPlayer2() {
-        return player2;
-    }
-
-    public void setPlayer2(TicTacToePlayer player2) {
-        GameUtils.player2 = player2;
     }
 }
