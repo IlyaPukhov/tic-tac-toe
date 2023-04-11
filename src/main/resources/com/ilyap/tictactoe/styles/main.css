@@ -45,14 +45,14 @@
 }
 
 .toggleGroup {
-	-fx-border-style: solid;
+    -fx-border-style: solid;
     -fx-background-color: #ffffff;
     -fx-border-color: lightgray;
 }
 
 .gridSeparator {
     -fx-background-color: #607d8b;
-	-fx-border-color: #607d8b;
+    -fx-border-color: #607d8b;
 }
 
 .toggleEnable:hover {
