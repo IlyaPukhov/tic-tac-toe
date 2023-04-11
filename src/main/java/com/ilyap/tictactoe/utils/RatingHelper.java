@@ -1,6 +1,7 @@
 package com.ilyap.tictactoe.utils;
 
 import com.ilyap.tictactoe.entities.TicTacToePlayer;
+import lombok.experimental.UtilityClass;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,8 +15,10 @@ import java.util.stream.Stream;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.stream.Collectors.toMap;
 
+@UtilityClass
 public class RatingHelper {
-    private static Map<String, Integer> getCurrentRate(Path path) throws IOException {
+
+    public Map<String, Integer> getCurrentRate(Path path) throws IOException {
         if (Files.exists(path)) {
             try (Stream<String> lines = Files.lines(path, UTF_8)) {
                 return lines
@@ -30,7 +33,7 @@ public class RatingHelper {
         return new HashMap<>();
     }
 
-    public static List<String> getNewRate(Path path, TicTacToePlayer... players) throws IOException {
+    public List<String> getNewRate(Path path, TicTacToePlayer... players) throws IOException {
         Map<String, Integer> currentRate = getCurrentRate(path);
         for (TicTacToePlayer player : players) {
             if (currentRate.containsKey(player.getName())) {
@@ -46,7 +49,7 @@ public class RatingHelper {
         return toListRepresentation(currentRate);
     }
 
-    private static List<String> toListRepresentation(Map<String, Integer> playersRating) {
+    private List<String> toListRepresentation(Map<String, Integer> playersRating) {
         return playersRating.entrySet().stream()
                 .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
                 .map(entry -> entry.getKey() + " — " + entry.getValue())

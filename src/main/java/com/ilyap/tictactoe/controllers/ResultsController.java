@@ -1,8 +1,10 @@
 package com.ilyap.tictactoe.controllers;
 
+import com.ilyap.tictactoe.exceptions.GameException;
 import com.ilyap.tictactoe.exceptions.OpenSceneException;
 import com.ilyap.tictactoe.interfaces.SceneSwitchable;
 import com.ilyap.tictactoe.utils.GameUtils;
+import com.ilyap.tictactoe.utils.RatingHelper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.nio.file.Path;
 import java.util.Map;
 
 public class ResultsController implements SceneSwitchable {
@@ -21,42 +23,38 @@ public class ResultsController implements SceneSwitchable {
     private Button restartButton;
 
     @FXML
-    private TableView<?> resultsTable;
-
-    @FXML
     private Button returnButton;
 
     @FXML
+    private TableView<Map.Entry<String, Integer>> resultsTable;
+
+    @FXML
+    private TableColumn<Map.Entry<String, Integer>, String> nameColumn;
+
+    @FXML
+    private TableColumn<Map.Entry<String, Integer>, String> winsColumn;
+
+    @FXML
     void initialize() {
-        fillTable();
+        try {
+            fillTable();
+        } catch (IOException e) {
+            throw new GameException(e.getCause());
+        }
+
+        restartButton.setOnAction(actionEvent -> openNextScene());
+        returnButton.setOnAction(actionEvent -> openPreviousScene());
     }
 
-    private void fillTable() {
-        // sample data
-        Map<String, String> map = new HashMap<>();
-        map.put("one", "One");
-        map.put("two", "Two");
-        map.put("three", "Three");
+    private void fillTable() throws IOException {
 
+        Map<String, Integer> map = RatingHelper.getCurrentRate(Path.of("stats", "players-rating.txt"));
 
-        // use fully detailed type for Map.Entry<String, String>
-        TableColumn<Map.Entry<String, String>, String> column1 = new TableColumn<>("Key");
-        column1.setCellValueFactory(p -> {
-            // this callback returns property for just one cell, you can't use a loop here
-            // for first column we use key
-            return new SimpleStringProperty(p.getValue().getKey());
-        });
+        nameColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey()));
+        winsColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().toString()));
 
-        TableColumn<Map.Entry<String, String>, String> column2 = new TableColumn<>("Value");
-        column2.setCellValueFactory(p -> {
-            // for second column we use value
-            return new SimpleStringProperty(p.getValue().getValue());
-        });
-
-        ObservableList<Map.Entry<String, String>> items = FXCollections.observableArrayList(map.entrySet());
-        final TableView<Map.Entry<String,String>> table = new TableView<>(items);
-
-        table.getColumns().setAll(column1, column2);
+        ObservableList<Map.Entry<String, Integer>> items = FXCollections.observableArrayList(map.entrySet());
+        resultsTable.setItems(items);
     }
 
     @Override

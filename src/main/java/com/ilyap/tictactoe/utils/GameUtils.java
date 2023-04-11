@@ -31,6 +31,7 @@ public final class GameUtils {
     @Setter
     private TicTacToePlayer player2;
 
+
     public void openNextScene(Button button, String path) throws IOException {
         button.getScene().getWindow().hide();
         GameUtils.setWindowScene(new Stage(), path);

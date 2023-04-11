@@ -62,8 +62,10 @@ public class TicTacToe {
     private void writeRating(TicTacToePlayer... players) throws IOException {
         Files.createDirectories(Path.of("stats"));
         Path path = Path.of("stats", "players-rating.txt");
-        List<String> rate = RatingHelper.getNewRate(path, players);
-        Files.write(path, rate, CREATE, TRUNCATE_EXISTING);
+
+        List<String> rateList = RatingHelper.getNewRate(path, players);
+        String rateString = String.join("\n", rateList);
+        Files.writeString(path, rateString, CREATE, TRUNCATE_EXISTING);
     }
 
     private boolean checkWin(CellState sign) {
