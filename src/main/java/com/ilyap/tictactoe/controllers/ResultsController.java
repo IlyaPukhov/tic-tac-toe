@@ -5,6 +5,7 @@ import com.ilyap.tictactoe.exceptions.OpenSceneException;
 import com.ilyap.tictactoe.interfaces.SceneSwitchable;
 import com.ilyap.tictactoe.utils.GameUtils;
 import com.ilyap.tictactoe.utils.RatingHelper;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,7 +33,7 @@ public class ResultsController implements SceneSwitchable {
     private TableColumn<Map.Entry<String, Integer>, String> nameColumn;
 
     @FXML
-    private TableColumn<Map.Entry<String, Integer>, String> winsColumn;
+    private TableColumn<Map.Entry<String, Integer>, Integer> winsColumn;
 
     @FXML
     void initialize() {
@@ -51,7 +52,7 @@ public class ResultsController implements SceneSwitchable {
         Map<String, Integer> map = RatingHelper.getCurrentRate(Path.of("stats", "players-rating.txt"));
 
         nameColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey()));
-        winsColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().toString()));
+        winsColumn.setCellValueFactory(p -> new SimpleIntegerProperty(p.getValue().getValue()).asObject());
 
         ObservableList<Map.Entry<String, Integer>> items = FXCollections.observableArrayList(map.entrySet());
         resultsTable.setItems(items);
