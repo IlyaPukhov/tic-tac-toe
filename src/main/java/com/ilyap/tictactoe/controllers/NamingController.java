@@ -1,18 +1,20 @@
 package com.ilyap.tictactoe.controllers;
 
-import com.ilyap.tictactoe.utils.GameUtils;
 import com.ilyap.tictactoe.entities.Bot;
 import com.ilyap.tictactoe.entities.Gamer;
 import com.ilyap.tictactoe.exceptions.OpenSceneException;
 import com.ilyap.tictactoe.interfaces.SceneSwitchable;
+import com.ilyap.tictactoe.utils.GameUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-import static com.ilyap.tictactoe.utils.GameMode.*;
-import static com.ilyap.tictactoe.entities.CellState.*;
-
 import java.io.IOException;
+
+import static com.ilyap.tictactoe.entities.CellState.CROSS;
+import static com.ilyap.tictactoe.entities.CellState.NOUGHT;
+import static com.ilyap.tictactoe.utils.GameMode.PVB;
+import static com.ilyap.tictactoe.utils.GameMode.PVP;
 
 public class NamingController implements SceneSwitchable {
 

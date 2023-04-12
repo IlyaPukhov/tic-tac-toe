@@ -46,6 +46,8 @@ public class GameController implements SceneSwitchable {
 
     private TicTacToePlayer currentMovingPlayer;
     private static final String TITLE_START = "Сейчас ходит ";
+    private static final String X_COLOR = "#f44336";
+    private static final String O_COLOR = "#345ef3";
 
     private final TicTacToe ticTacToe = new TicTacToe(3, player1, player2);
 
@@ -112,14 +114,14 @@ public class GameController implements SceneSwitchable {
     private void movingRoutines() {
         if (currentMovingPlayer.getClass().equals(Bot.class)) {
             moveTitle.setText(TITLE_START + currentMovingPlayer.getName());
-            moveTitle.setFill(Paint.valueOf("#345ef3"));
+            moveTitle.setFill(Paint.valueOf(O_COLOR));
             botMove();
         } else {
             moveTitle.setText(TITLE_START + currentMovingPlayer.getName());
             if (currentMovingPlayer == player1) {
-                moveTitle.setFill(Paint.valueOf("#f44336"));
+                moveTitle.setFill(Paint.valueOf(X_COLOR));
             } else {
-                moveTitle.setFill(Paint.valueOf("#345ef3"));
+                moveTitle.setFill(Paint.valueOf(O_COLOR));
             }
         }
     }
