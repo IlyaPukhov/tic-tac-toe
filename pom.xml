@@ -61,7 +61,7 @@
                     <archive>
                         <manifest>
                             <mainClass>
-                                com.ilyap.tictactoe.TicTacToeRunner
+                                com.ilyap.tictactoe.TicTacToeLauncher
                             </mainClass>
                         </manifest>
                     </archive>
@@ -89,7 +89,7 @@
                             <outfile>${project.build.directory}/TicTacToe.exe</outfile>
                             <downloadUrl>https://java.com/download</downloadUrl>
                             <classPath>
-                                <mainClass>com.ilyap.tictactoe.TicTacToeRunner</mainClass>
+                                <mainClass>com.ilyap.tictactoe.TicTacToeLauncher</mainClass>
                                 <preCp>anything</preCp>
                             </classPath>
                             <icon>${project.basedir}/src/main/resources/com/ilyap/tictactoe/assets/icon.ico</icon>
@@ -98,12 +98,12 @@
                                 <jdkPreference>preferJre</jdkPreference>
                             </jre>
                             <versionInfo>
-                                <fileVersion>${project.version}</fileVersion>
-                                <txtFileVersion>${project.version}</txtFileVersion>
+                                <fileVersion>${project.version}.0.0</fileVersion>
+                                <txtFileVersion>${project.version}.0.0</txtFileVersion>
                                 <fileDescription>${project.name}</fileDescription>
-                                <productVersion>${project.version}</productVersion>
+                                <productVersion>${project.version}.0.0</productVersion>
                                 <copyright>(C) 2023 Ilya Pukhov</copyright>
-                                <txtProductVersion>${project.version}</txtProductVersion>
+                                <txtProductVersion>${project.version}.0.0</txtProductVersion>
                                 <productName>${project.name}</productName>
                                 <internalName>TicTacToe</internalName>
                                 <originalFilename>TicTacToe.exe</originalFilename>
@@ -119,6 +119,13 @@
                 <configuration>
                     <source>20</source>
                     <target>20</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.26</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>
@@ -130,7 +137,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.ilyap.tictactoe.TicTacToeRunner</mainClass>
+                            <mainClass>com.ilyap.tictactoe.TicTacToeLauncher</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

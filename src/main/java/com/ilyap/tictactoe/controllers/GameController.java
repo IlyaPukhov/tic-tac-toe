@@ -154,6 +154,9 @@ public class GameController implements SceneSwitchable {
 
     private void newGame(TicTacToe ticTacToe) {
         ticTacToe.game();
+        player1.setGame(ticTacToe);
+        player2.setGame(ticTacToe);
+
         gameField.setDisable(false);
         for (Node node : gameField.getChildren()) {
             node.setDisable(false);

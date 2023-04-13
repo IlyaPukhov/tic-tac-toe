@@ -18,7 +18,7 @@ import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
 public class TicTacToe {
-    private static CellState[][] matrix;
+    private final CellState[][] matrix;
 
     private final TicTacToePlayer player1;
     private final TicTacToePlayer player2;
@@ -139,7 +139,7 @@ public class TicTacToe {
         }
     }
 
-    public static boolean isCellEmpty(int x, int y) {
+    public boolean isCellEmpty(int x, int y) {
         if (x < 0 || y < 0 || x >= matrix.length || y >= matrix.length) {
             throw new GameException("Неверные координаты!");
         }
@@ -157,7 +157,7 @@ public class TicTacToe {
         return true;
     }
 
-    public static void setMatrix(int x, int y, CellState sign) {
+    public void setMatrix(int x, int y, CellState sign) {
         matrix[y][x] = sign;
     }
 }
