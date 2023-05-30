@@ -6,7 +6,7 @@
 
     <groupId>com.ilyap</groupId>
     <artifactId>tic-tac-toe</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <name>tic-tac-toe</name>
 
     <properties>
@@ -29,6 +29,12 @@
             <artifactId>javafx-graphics</artifactId>
             <version>20</version>
             <classifier>win</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>20</version>
+            <classifier>mac</classifier>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
