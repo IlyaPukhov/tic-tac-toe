@@ -9,7 +9,6 @@ import com.ilyap.tictactoe.exceptions.GameException;
 import com.ilyap.tictactoe.exceptions.OpenSceneException;
 import com.ilyap.tictactoe.interfaces.SceneSwitchable;
 import com.ilyap.tictactoe.utils.GameUtils;
-import com.ilyap.tictactoe.utils.PlayerState;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -103,21 +102,22 @@ public class GameController implements SceneSwitchable {
     }
 
     private void nextStep() throws IOException {
-        if (checkWinner(currentMovingPlayer)) {
-            winnerRoutines();
-        } else {
-            currentMovingPlayer = players.get(players.size() - (players.indexOf(currentMovingPlayer)) - 1);
-            movingRoutines();
+        switch (ticTacToe.checkWin(currentMovingPlayer)) {
+            case WON -> winnerRoutines();
+            case DRAW -> drawRoutines();
+            default -> {
+                currentMovingPlayer = players.get(players.size() - players.indexOf(currentMovingPlayer) - 1);
+                movingRoutines();
+            }
         }
     }
 
     private void movingRoutines() {
+        moveTitle.setText(TITLE_START + currentMovingPlayer.getName());
         if (currentMovingPlayer.getClass().equals(Bot.class)) {
-            moveTitle.setText(TITLE_START + currentMovingPlayer.getName());
             moveTitle.setFill(Paint.valueOf(O_COLOR));
             botMove();
         } else {
-            moveTitle.setText(TITLE_START + currentMovingPlayer.getName());
             if (currentMovingPlayer == player1) {
                 moveTitle.setFill(Paint.valueOf(X_COLOR));
             } else {
@@ -128,6 +128,12 @@ public class GameController implements SceneSwitchable {
 
     private void winnerRoutines() {
         moveTitle.setText(currentMovingPlayer.getName() + " победил!");
+        gameField.setDisable(true);
+    }
+
+    private void drawRoutines() {
+        moveTitle.setFill(Paint.valueOf("#000000"));
+        moveTitle.setText("Ничья!");
         gameField.setDisable(true);
     }
 
@@ -146,10 +152,6 @@ public class GameController implements SceneSwitchable {
     private Image getPlayerSign(TicTacToePlayer player) {
         return new Image(Objects.requireNonNull(
                 TicTacToeRunner.class.getResourceAsStream(player.getSign().getSignPath())));
-    }
-
-    private boolean checkWinner(TicTacToePlayer player) throws IOException {
-        return ticTacToe.checkWin(player) == PlayerState.WON;
     }
 
     private void newGame(TicTacToe ticTacToe) {

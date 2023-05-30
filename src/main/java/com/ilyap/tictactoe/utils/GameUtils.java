@@ -2,6 +2,7 @@ package com.ilyap.tictactoe.utils;
 
 import com.ilyap.tictactoe.TicTacToeRunner;
 import com.ilyap.tictactoe.entities.TicTacToePlayer;
+import com.ilyap.tictactoe.states.GameMode;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 @UtilityClass
-public final class GameUtils {
+public class GameUtils {
 
     @Getter
     @Setter

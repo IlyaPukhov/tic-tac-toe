@@ -1,10 +1,9 @@
 package com.ilyap.tictactoe;
 
-import com.ilyap.tictactoe.entities.CellState;
-import com.ilyap.tictactoe.entities.Gamer;
+import com.ilyap.tictactoe.states.CellState;
 import com.ilyap.tictactoe.entities.TicTacToePlayer;
 import com.ilyap.tictactoe.exceptions.GameException;
-import com.ilyap.tictactoe.utils.PlayerState;
+import com.ilyap.tictactoe.states.GameState;
 import com.ilyap.tictactoe.utils.RatingHelper;
 
 import java.io.IOException;
@@ -12,8 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import static com.ilyap.tictactoe.entities.CellState.*;
-import static com.ilyap.tictactoe.utils.PlayerState.*;
+import static com.ilyap.tictactoe.states.CellState.EMPTY;
+import static com.ilyap.tictactoe.states.GameState.*;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
@@ -22,10 +21,6 @@ public class TicTacToe {
 
     private final TicTacToePlayer player1;
     private final TicTacToePlayer player2;
-
-    public TicTacToe() {
-        this(3, new Gamer("Player1", CROSS), new Gamer("Player2", NOUGHT));
-    }
 
     public TicTacToe(int size, TicTacToePlayer player1, TicTacToePlayer player2) {
         matrix = new CellState[size][size];
@@ -37,7 +32,7 @@ public class TicTacToe {
         initMatrix();
     }
 
-    public PlayerState checkWin(TicTacToePlayer player) throws IOException {
+    public GameState checkWin(TicTacToePlayer player) throws IOException {
         if (checkWin(player.getSign())) {
             if (player.equals(player1)) {
                 player1.setCountWins(1);
@@ -56,7 +51,7 @@ public class TicTacToe {
                 return DRAW;
             }
         }
-        return LOST;
+        return PROCESS;
     }
 
     private void writeRating(TicTacToePlayer... players) throws IOException {

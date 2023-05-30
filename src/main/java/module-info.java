@@ -15,4 +15,7 @@ module com.ilyap.tictactoe {
     opens com.ilyap.tictactoe.utils to javafx.fxml, javafx.controls, javafx.graphics;
     exports com.ilyap.tictactoe.entities;
     opens com.ilyap.tictactoe.entities to javafx.fxml, javafx.controls, javafx.graphics;
+    exports com.ilyap.tictactoe.states;
+    opens com.ilyap.tictactoe.states to javafx.controls, javafx.fxml, javafx.graphics;
 }
+

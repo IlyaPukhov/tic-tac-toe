@@ -11,10 +11,10 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-import static com.ilyap.tictactoe.entities.CellState.CROSS;
-import static com.ilyap.tictactoe.entities.CellState.NOUGHT;
-import static com.ilyap.tictactoe.utils.GameMode.PVB;
-import static com.ilyap.tictactoe.utils.GameMode.PVP;
+import static com.ilyap.tictactoe.states.CellState.CROSS;
+import static com.ilyap.tictactoe.states.CellState.NOUGHT;
+import static com.ilyap.tictactoe.states.GameMode.PVB;
+import static com.ilyap.tictactoe.states.GameMode.PVP;
 
 public class NamingController implements SceneSwitchable {
 

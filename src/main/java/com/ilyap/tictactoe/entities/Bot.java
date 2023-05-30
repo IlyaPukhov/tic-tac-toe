@@ -1,5 +1,7 @@
 package com.ilyap.tictactoe.entities;
 
+import com.ilyap.tictactoe.states.CellState;
+
 import java.util.Random;
 
 public class Bot extends TicTacToePlayer {

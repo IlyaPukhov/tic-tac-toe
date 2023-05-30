@@ -6,7 +6,7 @@
 
     <groupId>com.ilyap</groupId>
     <artifactId>tic-tac-toe</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <name>tic-tac-toe</name>
 
     <properties>
@@ -86,7 +86,7 @@
                             <jar>
                                 ${project.build.directory}/${project.artifactId}-${project.version}-jar-with-dependencies.jar
                             </jar>
-                            <outfile>${project.build.directory}/TicTacToe.exe</outfile>
+                            <outfile>${project.build.directory}/${project.artifactId}.exe</outfile>
                             <downloadUrl>https://java.com/download</downloadUrl>
                             <classPath>
                                 <mainClass>com.ilyap.tictactoe.TicTacToeLauncher</mainClass>
@@ -105,8 +105,8 @@
                                 <copyright>(C) 2023 Ilya Pukhov</copyright>
                                 <txtProductVersion>${project.version}.0.0</txtProductVersion>
                                 <productName>${project.name}</productName>
-                                <internalName>TicTacToe</internalName>
-                                <originalFilename>TicTacToe.exe</originalFilename>
+                                <internalName>${project.artifactId}</internalName>
+                                <originalFilename>${project.artifactId}.exe</originalFilename>
                             </versionInfo>
                         </configuration>
                     </execution>
@@ -134,7 +134,6 @@
                 <version>0.0.8</version>
                 <executions>
                     <execution>
-                        <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>com.ilyap.tictactoe.TicTacToeLauncher</mainClass>

@@ -1,4 +1,4 @@
-package com.ilyap.tictactoe.entities;
+package com.ilyap.tictactoe.states;
 
 public enum CellState {
     EMPTY(null), CROSS("assets/X.png"), NOUGHT("assets/O.png");

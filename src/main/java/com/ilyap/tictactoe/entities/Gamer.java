@@ -1,6 +1,7 @@
 package com.ilyap.tictactoe.entities;
 
 import com.ilyap.tictactoe.exceptions.GameException;
+import com.ilyap.tictactoe.states.CellState;
 
 public class Gamer extends TicTacToePlayer {
     public Gamer(String name, CellState sign) {

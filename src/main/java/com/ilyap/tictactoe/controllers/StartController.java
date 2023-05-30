@@ -3,7 +3,7 @@ package com.ilyap.tictactoe.controllers;
 import com.ilyap.tictactoe.TicTacToeRunner;
 import com.ilyap.tictactoe.exceptions.OpenSceneException;
 import com.ilyap.tictactoe.interfaces.SceneSwitchable;
-import com.ilyap.tictactoe.utils.GameMode;
+import com.ilyap.tictactoe.states.GameMode;
 import com.ilyap.tictactoe.utils.GameUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,8 +13,8 @@ import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 
-import static com.ilyap.tictactoe.utils.GameMode.PVB;
-import static com.ilyap.tictactoe.utils.GameMode.PVP;
+import static com.ilyap.tictactoe.states.GameMode.PVB;
+import static com.ilyap.tictactoe.states.GameMode.PVP;
 
 public class StartController implements SceneSwitchable {
 

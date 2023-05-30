@@ -1,6 +1,7 @@
 package com.ilyap.tictactoe.entities;
 
 import com.ilyap.tictactoe.TicTacToe;
+import com.ilyap.tictactoe.states.CellState;
 
 public abstract class TicTacToePlayer {
     private final String name;
